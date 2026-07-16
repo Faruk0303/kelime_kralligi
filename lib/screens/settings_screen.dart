@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kelime_kralligi/game_state.dart';
+import 'package:kelime_kralligi/providers/game_state.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});

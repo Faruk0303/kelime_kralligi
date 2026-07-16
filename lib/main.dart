@@ -1,7 +1,7 @@
 // lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:kelime_kralligi/screens/main_menu.dart';
-import 'package:kelime_kralligi/game_state.dart';
+import 'package:kelime_kralligi/providers/game_state.dart';
 import 'package:provider/provider.dart'; // <<< EKLENDİ
 
 void main() async {

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:kelime_kralligi/screens/levels_screen.dart';
 import 'package:kelime_kralligi/screens/settings_screen.dart';
-import 'package:kelime_kralligi/game_state.dart';
+import 'package:kelime_kralligi/providers/game_state.dart';
 import 'package:kelime_kralligi/screens/voice_input.dart';
 
 class MainMenu extends StatelessWidget {

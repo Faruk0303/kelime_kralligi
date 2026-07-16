@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:kelime_kralligi/widgets/life_indicator.dart';
 import 'package:kelime_kralligi/widgets/score_indicator.dart';
-import 'package:kelime_kralligi/game_state.dart';
+import 'package:kelime_kralligi/providers/game_state.dart';
 import 'package:kelime_kralligi/screens/manual_write.dart';
 import 'package:kelime_kralligi/screens/levels_screen.dart';
 

@@ -4,7 +4,7 @@ import 'package:kelime_kralligi/screens/voice_input.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:kelime_kralligi/widgets/life_indicator.dart';
 import 'package:kelime_kralligi/widgets/score_indicator.dart';
-import 'package:kelime_kralligi/game_state.dart';
+import 'package:kelime_kralligi/providers/game_state.dart';
 import 'dart:async';
 import 'package:kelime_kralligi/screens/levels_screen.dart';
 import 'dart:math';

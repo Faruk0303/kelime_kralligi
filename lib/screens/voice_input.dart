@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:kelime_kralligi/screens/letter_shuffle.dart';
 import 'package:kelime_kralligi/screens/levels_screen.dart';
-import 'package:kelime_kralligi/game_state.dart';
+import 'package:kelime_kralligi/providers/game_state.dart';
 
 class VoiceInput extends StatefulWidget {
   final int levelIndex;

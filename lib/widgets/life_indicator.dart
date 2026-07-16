@@ -1,6 +1,6 @@
 // lib/widgets/life_indicator.dart
 import 'package:flutter/material.dart';
-import 'package:kelime_kralligi/game_state.dart';
+import 'package:kelime_kralligi/providers/game_state.dart';
 import 'package:provider/provider.dart';
 
 class LifeIndicator extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kelime_kralligi/game_state.dart';
+import 'package:kelime_kralligi/providers/game_state.dart';
 import 'package:kelime_kralligi/screens/main_menu.dart';
 import 'package:kelime_kralligi/screens/voice_input.dart';
 
