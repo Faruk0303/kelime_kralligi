@@ -1,6 +1,6 @@
 // lib/main.dart
 import 'package:flutter/material.dart';
-import 'package:kelime_kralligi/screens/main_menu.dart';
+import 'package:kelime_kralligi/screens/splash/splash_screen.dart';
 import 'package:kelime_kralligi/providers/game_state.dart';
 import 'package:provider/provider.dart'; // <<< EKLENDİ
 
@@ -8,7 +8,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GameState.instance.loadGameData();
   runApp(
-    ChangeNotifierProvider( // <<< EKLENDİ: GameState'i sarmalıyoruz
+    ChangeNotifierProvider(
+      // <<< EKLENDİ: GameState'i sarmalıyoruz
       create: (context) => GameState.instance,
       child: const MyApp(),
     ),
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
           foregroundColor: Colors.white, // AppBar icons and text color
         ),
       ),
-      home: const MainMenu(),
+      home: const SplashScreen(),
     );
   }
 }
