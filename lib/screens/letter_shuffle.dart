@@ -6,7 +6,6 @@ import 'package:kelime_kralligi/game_state.dart';
 import 'package:kelime_kralligi/screens/manual_write.dart';
 import 'package:kelime_kralligi/screens/levels_screen.dart';
 
-
 class LetterShuffle extends StatefulWidget {
   final String word;
   final String colorName;
@@ -105,76 +104,77 @@ class _LetterShuffleState extends State<LetterShuffle> {
     final letterCount = widget.word.length;
     final boxSize = min(maxBoxWidth / letterCount - 8, 70.0);
 
-    return WillPopScope(
-  onWillPop: () async {
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (context) => const LevelsScreen()),
-      (Route<dynamic> route) => false,
-    );
-    return false;
-  },
-  child: Scaffold(
-    backgroundColor: _themeColor,
-    appBar: AppBar(
-      title: const Text('Harfleri Sırala'),
-      backgroundColor: _themeColor,
-      foregroundColor: textColor,
-      centerTitle: true,
-      elevation: 0,
-      actions: const [
-        ScoreIndicator(),
-        SizedBox(width: 12),
-        LifeIndicator(),
-        SizedBox(width: 12),
-      ],
-    ),
-    body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Wrap(
-            alignment: WrapAlignment.center,
-            spacing: 8,
-            runSpacing: 8,
-            children: List.generate(_shuffledLetters.length, (index) {
-              return Draggable<int>(
-                data: index,
-                feedback: Material(
-                  color: Colors.transparent,
-                  child: _buildLetterBox(_shuffledLetters[index], boxSize, textColor),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => const LevelsScreen()),
+            (Route<dynamic> route) => false,
+          );
+        }
+      },
+      child: Scaffold(
+        backgroundColor: _themeColor,
+        appBar: AppBar(
+          title: const Text('Harfleri Sırala'),
+          backgroundColor: _themeColor,
+          foregroundColor: textColor,
+          centerTitle: true,
+          elevation: 0,
+          actions: const [
+            ScoreIndicator(),
+            SizedBox(width: 12),
+            LifeIndicator(),
+            SizedBox(width: 12),
+          ],
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 8,
+                runSpacing: 8,
+                children: List.generate(_shuffledLetters.length, (index) {
+                  return Draggable<int>(
+                    data: index,
+                    feedback: Material(
+                      color: Colors.transparent,
+                      child: _buildLetterBox(_shuffledLetters[index], boxSize, textColor),
+                    ),
+                    childWhenDragging: Opacity(
+                      opacity: 0.3,
+                      child: _buildLetterBox(_shuffledLetters[index], boxSize, textColor),
+                    ),
+                    child: DragTarget<int>(
+                      onWillAcceptWithDetails: (details) => details.data != index,
+                      onAcceptWithDetails: (details) => _swapLetters(details.data, index),
+                      builder: (context, candidateData, rejectedData) {
+                        return _buildLetterBox(_shuffledLetters[index], boxSize, textColor);
+                      },
+                    ),
+                  );
+                }),
+              ),
+              const SizedBox(height: 40),
+              ElevatedButton.icon(
+                onPressed: _checkAndProceed,
+                icon: const Icon(Icons.check),
+                label: const Text("Kelimeyi Yaz"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: _themeColor,
+                  foregroundColor: textColor,
+                  side: BorderSide(color: textColor, width: 2),
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
                 ),
-                childWhenDragging: Opacity(
-                  opacity: 0.3,
-                  child: _buildLetterBox(_shuffledLetters[index], boxSize, textColor),
-                ),
-                child: DragTarget<int>(
-                  onWillAccept: (fromIndex) => fromIndex != index,
-                  onAccept: (fromIndex) => _swapLetters(fromIndex, index),
-                  builder: (context, candidateData, rejectedData) {
-                    return _buildLetterBox(_shuffledLetters[index], boxSize, textColor);
-                  },
-                ),
-              );
-            }),
+              ),
+            ],
           ),
-          const SizedBox(height: 40),
-          ElevatedButton.icon(
-            onPressed: _checkAndProceed,
-            icon: const Icon(Icons.check),
-            label: const Text("Kelimeyi Yaz"),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: _themeColor,
-              foregroundColor: textColor,
-              side: BorderSide(color: textColor, width: 2),
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
-            ),
-          ),
-        ],
+        ),
       ),
-    ),
-  ),
-);
-
+    );
   }
 
   Widget _buildLetterBox(String letter, double size, Color textColor) {
@@ -183,7 +183,7 @@ class _LetterShuffleState extends State<LetterShuffle> {
       height: size,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: _themeColor.withOpacity(0.9),
+        color: _themeColor.withValues(alpha: 0.9),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: textColor, width: 2),
         boxShadow: [

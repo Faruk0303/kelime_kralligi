@@ -24,7 +24,7 @@ class _LevelsScreenState extends State<LevelsScreen> with SingleTickerProviderSt
     'Gezegenler',
   ];
 
-  static const int premiumStartIndex = 3; // 4. seviyeden itibaren premium
+  static const int premiumStartIndex = 3;
 
   @override
   void initState() {
@@ -36,8 +36,6 @@ class _LevelsScreenState extends State<LevelsScreen> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    final completedLevelIndex = GameState.instance.completedLevelIndex;
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -60,7 +58,6 @@ class _LevelsScreenState extends State<LevelsScreen> with SingleTickerProviderSt
       ),
       body: Stack(
         children: [
-          // Arka plan renkli baloncuklar ile
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -72,15 +69,13 @@ class _LevelsScreenState extends State<LevelsScreen> with SingleTickerProviderSt
           ),
           ..._buildBubbles(),
 
-          // Seviye listesi
           ListView.builder(
             padding: const EdgeInsets.all(16.0),
             itemCount: _levelTitles.length,
             itemBuilder: (context, index) {
               final bool isPremium = index >= premiumStartIndex;
               final bool isUnlocked = index == 0 ||
-                  (!isPremium &&
-                  GameState.instance.isLevelCompleted(index-1));
+                  (!isPremium && GameState.instance.isLevelCompleted(index - 1));
               final int currentScore = GameState.instance.getCompletedWordsCount(index);
               final int totalWords = _getTotalWordsForLevel(index);
               final double progress = (totalWords > 0) ? currentScore / totalWords : 0;
@@ -90,11 +85,11 @@ class _LevelsScreenState extends State<LevelsScreen> with SingleTickerProviderSt
               List<BoxShadow> shadows = [];
 
               if (isPremium) {
-                cardColor = isUnlocked ? Colors.orangeAccent.shade100 : Colors.orange.shade200.withOpacity(0.7);
+                cardColor = isUnlocked ? Colors.orangeAccent.shade100 : Colors.orange.shade200.withValues(alpha: 0.7);
                 titleColor = Colors.deepOrange.shade900;
                 shadows = [
                   BoxShadow(
-                    color: Colors.orangeAccent.withOpacity(0.6),
+                    color: Colors.orangeAccent.withValues(alpha: 0.6),
                     blurRadius: 12,
                     spreadRadius: 3,
                     offset: const Offset(0, 4),
@@ -106,7 +101,7 @@ class _LevelsScreenState extends State<LevelsScreen> with SingleTickerProviderSt
                 if (isUnlocked) {
                   shadows = [
                     BoxShadow(
-                      color: Colors.purpleAccent.withOpacity(0.4),
+                      color: Colors.purpleAccent.withValues(alpha: 0.4),
                       offset: const Offset(0, 4),
                       blurRadius: 8,
                     ),
@@ -134,7 +129,11 @@ class _LevelsScreenState extends State<LevelsScreen> with SingleTickerProviderSt
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => VoiceInput(levelIndex: index, colorName: '', word: '',),
+                                builder: (context) => VoiceInput(
+                                  levelIndex: index,
+                                  colorName: '',
+                                  word: '',
+                                ),
                               ),
                             ).then((_) {
                               GameState.instance.loadGameData().then((__) {
@@ -163,7 +162,7 @@ class _LevelsScreenState extends State<LevelsScreen> with SingleTickerProviderSt
                         color: titleColor,
                         shadows: [
                           Shadow(
-                            color: Colors.orangeAccent.withOpacity(0.5),
+                            color: Colors.orangeAccent.withValues(alpha: 0.5),
                             offset: const Offset(2, 2),
                             blurRadius: 5,
                           ),
@@ -232,14 +231,13 @@ class _LevelsScreenState extends State<LevelsScreen> with SingleTickerProviderSt
     );
   }
 
-  // Arka plandaki baloncukları oluşturur
   List<Widget> _buildBubbles() {
     List<Widget> bubbles = [];
     final colors = [
-      Colors.pinkAccent.shade100.withOpacity(0.4),
-      Colors.orangeAccent.shade100.withOpacity(0.4),
-      Colors.purpleAccent.shade100.withOpacity(0.3),
-      Colors.yellowAccent.shade100.withOpacity(0.3),
+      Colors.pinkAccent.shade100.withValues(alpha: 0.4),
+      Colors.orangeAccent.shade100.withValues(alpha: 0.4),
+      Colors.purpleAccent.shade100.withValues(alpha: 0.3),
+      Colors.yellowAccent.shade100.withValues(alpha: 0.3),
     ];
 
     final sizes = [80.0, 120.0, 60.0, 100.0];
@@ -262,7 +260,7 @@ class _LevelsScreenState extends State<LevelsScreen> with SingleTickerProviderSt
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: colors[i].withOpacity(0.6),
+                color: colors[i].withValues(alpha: 0.6),
                 blurRadius: 15,
                 spreadRadius: 5,
               )

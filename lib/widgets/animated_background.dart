@@ -13,7 +13,7 @@ class AnimatedCharacterBackground extends StatefulWidget {
 class _AnimatedCharacterBackgroundState extends State<AnimatedCharacterBackground>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  final Random _random = Random();
+  
 
   @override
   void initState() {
@@ -63,7 +63,7 @@ class FlowerRainPainter extends CustomPainter {
       final radius = 6 + 4 * sin((value * 2 * pi) + i);
       final x = (size.width / 30) * i + 10 * sin(value * 6 * pi + i);
       final y = (value * size.height * 1.2 + i * 40) % size.height;
-      paint.color = flowerColors[i % flowerColors.length].withOpacity(0.7 + (i % 3) * 0.15);
+      paint.color = flowerColors[i % flowerColors.length].withValues(alpha: 0.7 + (i % 3) * 0.15);
       canvas.drawCircle(Offset(x, y), radius, paint);
     }
   }
@@ -93,7 +93,7 @@ class BubbleStarPainter extends CustomPainter {
       final x = (size.width / 25) * i + 10 * sin(value * 2 * pi + i);
       final y = size.height - (value * size.height * 1.2 + i * 25) % size.height;
       final radius = 3 + 2 * sin((value + i) * 3);
-      paint.color = starColors[i % starColors.length].withOpacity(0.8);
+      paint.color = starColors[i % starColors.length].withValues(alpha: 0.8);
       canvas.drawCircle(Offset(x, y), radius, paint);
     }
 
@@ -101,7 +101,7 @@ class BubbleStarPainter extends CustomPainter {
     for (int i = 0; i < 10; i++) {
       final bubbleX = size.width * _noise(i * 0.5 + value);
       final bubbleY = size.height - (value * size.height * 1.1 + i * 50) % size.height;
-      paint.color = Colors.white.withOpacity(0.4 + (i % 3) * 0.15);
+      paint.color = Colors.white.withValues(alpha: 0.4 + (i % 3) * 0.15);
       canvas.drawCircle(Offset(bubbleX, bubbleY), 8 + i % 5.0, paint);
     }
   }

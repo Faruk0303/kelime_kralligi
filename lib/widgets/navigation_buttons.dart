@@ -31,12 +31,12 @@ class NavigationButtons extends StatelessWidget {
               icon: const Icon(Icons.arrow_back),
               label: const Text("Geri"),
               style: ElevatedButton.styleFrom(
-                backgroundColor: color.withOpacity(0.9),
+                backgroundColor: color.withValues(alpha: 0.9),
                 foregroundColor: Colors.white,
               ),
             )
           else
-            const SizedBox(width: 100), // boşluk dengesi
+            const SizedBox(width: 100),
 
           if (showNext)
             ElevatedButton.icon(
@@ -44,7 +44,7 @@ class NavigationButtons extends StatelessWidget {
               icon: const Icon(Icons.arrow_forward),
               label: Text(nextLabel),
               style: ElevatedButton.styleFrom(
-                backgroundColor: color.withOpacity(0.9),
+                backgroundColor: color.withValues(alpha: 0.9),
                 foregroundColor: Colors.white,
               ),
             )

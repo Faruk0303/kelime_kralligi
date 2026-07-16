@@ -11,7 +11,9 @@ class VoiceInput extends StatefulWidget {
 
   const VoiceInput({
     super.key,
-    required this.levelIndex, required String colorName, required String word,
+    required this.levelIndex, 
+    required String colorName, 
+    required String word,
   });
 
   @override
@@ -238,32 +240,38 @@ class _VoiceInputState extends State<VoiceInput> with SingleTickerProviderStateM
     }
   }
 
-  void _listen() async {
+    void _listen() async {
     if (!allowVoiceInput || _isListening) return;
 
     bool available = await _speech.initialize();
     if (available) {
       if (mounted) setState(() => _isListening = true);
-      _speech.listen(
-        onResult: (val) {
-          if (val.finalResult) {
-            final word = val.recognizedWords.toLowerCase().trim();
-            final completedWords = GameState.instance.getCompletedWords(widget.levelIndex);
 
-            if (_validWordsInLevel.contains(word)) {
-              if (!completedWords.contains(word)) {
-                if (mounted) {
-                  setState(() {
-                     _recognizedWord = word;
-                     _lastSpokenCorrectWord = word;
-                     _themeColor = _wordColors[word] ?? Colors.green.shade400;
-                     _isTextDark = _themeColor.computeLuminance() > 0.5;
-                 });
-              }
-              GameState.instance.addScore(20);
-              GameState.instance.addCurrentLevelScore(20);
+      await _speech.listen(
+  onResult: (val) {
+    if (val.finalResult) {
+      final word = val.recognizedWords.toLowerCase().trim();
+      final completedWords =
+          GameState.instance.getCompletedWords(widget.levelIndex);
+
+      if (_validWordsInLevel.contains(word)) {
+        if (!completedWords.contains(word)) {
+          if (mounted) {
+            setState(() {
+              _recognizedWord = word;
+              _lastSpokenCorrectWord = word;
+              _themeColor =
+                  _wordColors[word] ?? Colors.green.shade400;
+              _isTextDark =
+                  _themeColor.computeLuminance() > 0.5;
+            });
+          }
+
+          GameState.instance.addScore(20);
+          GameState.instance.addCurrentLevelScore(20);
         } else {
           GameState.instance.loseLife();
+
           if (mounted) {
             _showAlreadySpokenDialog(word);
             _resetTheme();
@@ -271,10 +279,16 @@ class _VoiceInputState extends State<VoiceInput> with SingleTickerProviderStateM
         }
       } else if (word.isNotEmpty) {
         GameState.instance.loseLife();
+
         if (mounted) {
           _resetTheme();
+
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Yanlış kelime: "${word.toUpperCase()}" veya algılanamadı. Bir can kaybettin.')),
+            SnackBar(
+              content: Text(
+                'Yanlış kelime: "${word.toUpperCase()}" veya algılanamadı. Bir can kaybettin.',
+              ),
+            ),
           );
         }
       }
@@ -288,7 +302,7 @@ class _VoiceInputState extends State<VoiceInput> with SingleTickerProviderStateM
   pauseFor: const Duration(seconds: 3),
   localeId: 'tr_TR',
 );
-
+      
     } else if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Mikrofon kullanılamıyor veya izin verilmedi.')),
@@ -478,7 +492,7 @@ class _VoiceInputState extends State<VoiceInput> with SingleTickerProviderStateM
   Widget build(BuildContext context) {
     final textColor = _isTextDark ? Colors.black87 : Colors.white;
     final bubbleColor = _isTextDark ? Colors.grey.shade100 : Colors.black54;
-    final bubbleBorder = Border.all(color: textColor.withOpacity(0.1), width: 1);
+    final bubbleBorder = Border.all(color: textColor.withValues(alpha: 0.1), width: 1);
 
     return Scaffold(
       appBar: AppBar(
@@ -544,7 +558,7 @@ class _VoiceInputState extends State<VoiceInput> with SingleTickerProviderStateM
                         border: bubbleBorder,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
+                            color: Colors.black.withValues(alpha: 0.05),
                             blurRadius: 5,
                             offset: const Offset(0, 3),
                           ),
@@ -575,7 +589,7 @@ class _VoiceInputState extends State<VoiceInput> with SingleTickerProviderStateM
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: textColor.withOpacity(0.85),
+                        color: textColor.withValues(alpha: 0.85),
                       ),
                     ),
                     const SizedBox(height: 40),
@@ -605,7 +619,7 @@ class _VoiceInputState extends State<VoiceInput> with SingleTickerProviderStateM
                       icon: const Icon(Icons.shuffle),
                       label: const Text('Harfleri Karıştır'),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: _themeColor.withOpacity(0.85),
+                        backgroundColor: _themeColor.withValues(alpha: 0.85),
                         foregroundColor: textColor,
                         side: BorderSide(color: textColor, width: 2),
                         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
@@ -632,7 +646,7 @@ class _VoiceInputState extends State<VoiceInput> with SingleTickerProviderStateM
                   border: bubbleBorder,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 10,
                       offset: const Offset(0, 4),
                     ),
@@ -699,7 +713,7 @@ class _VoiceInputState extends State<VoiceInput> with SingleTickerProviderStateM
               child: Center(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: _themeColor.withOpacity(0.95),
+                    backgroundColor: _themeColor.withValues(alpha: 0.95),
                     foregroundColor: textColor,
                     padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),

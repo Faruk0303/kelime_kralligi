@@ -420,8 +420,8 @@ class _ManualWriteState extends State<ManualWrite> {
   Widget build(BuildContext context) {
     final textColor = _isTextDark ? Colors.black : Colors.white;
     final bubbleColor = selectedCharacter == 'Hazal'
-        ? Colors.pink.shade50.withAlpha((0.98 * 255).round())
-        : Colors.blue.shade50.withAlpha((0.98 * 255).round());
+        ? Colors.pink.shade50.withValues(alpha: 0.98)
+        : Colors.blue.shade50.withValues(alpha: 0.98);
     final bubbleBorder = Border.all(
       color: selectedCharacter == 'Hazal' ? Colors.pink : Colors.blue,
       width: 2,
@@ -537,7 +537,7 @@ class _ManualWriteState extends State<ManualWrite> {
                               borderSide: BorderSide(color: textColor, width: 3),
                             ),
                             filled: true,
-                            fillColor: _isTextDark ? Colors.white.withOpacity(0.4) : Colors.black.withOpacity(0.1),
+                            fillColor: _isTextDark ? Colors.white.withValues(alpha: 0.4) : Colors.black.withValues(alpha: 0.1),
                           ),
                           onSubmitted: (_) => _checkWord(),
                         ),

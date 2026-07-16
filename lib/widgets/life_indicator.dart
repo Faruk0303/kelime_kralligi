@@ -1,7 +1,7 @@
 // lib/widgets/life_indicator.dart
 import 'package:flutter/material.dart';
 import 'package:kelime_kralligi/game_state.dart';
-import 'package:provider/provider.dart'; // <<< EKLENDİ
+import 'package:provider/provider.dart';
 
 class LifeIndicator extends StatelessWidget {
   final Color backgroundColor;
@@ -10,14 +10,13 @@ class LifeIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // GameState'deki 'lives' değerini dinliyoruz
     return Consumer<GameState>(
       builder: (context, gameState, child) {
-        final int lives = gameState.lives; // Nullable problem çözüldü, direkt int alıyoruz
+        final int lives = gameState.lives;
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           decoration: BoxDecoration(
-            color: backgroundColor.withOpacity(0.2), // Subtle background
+            color: backgroundColor.withValues(alpha: 0.2),
             borderRadius: BorderRadius.circular(8),
             border: Border.all(color: Colors.white, width: 1.5),
           ),
@@ -26,7 +25,7 @@ class LifeIndicator extends StatelessWidget {
             children: [
               Icon(
                 Icons.favorite,
-                color: (lives > 0) ? Colors.red : Colors.grey, // Operand can't be null uyarısı burada önemsiz, lives zaten int
+                color: (lives > 0) ? Colors.red : Colors.grey,
                 size: 24,
               ),
               const SizedBox(width: 5),

@@ -153,8 +153,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           boxShadow: [
             BoxShadow(
               color: isActive
-                  ? Colors.deepOrange.shade300.withOpacity(0.6)
-                  : Colors.grey.shade400,
+                  ? Colors.deepOrange.shade300.withValues(alpha: 0.6)
+                  : Colors.grey.shade400.withValues(alpha: 0.8),
               blurRadius: 10,
               offset: const Offset(0, 6),
             ),
